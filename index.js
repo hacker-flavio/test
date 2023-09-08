@@ -124,8 +124,8 @@ async function fetchTopMemes(req, subReddit) {
 
   //dankmemes
   const subreddit = await client.getSubreddit(subReddit);
-  //const topPosts = await subreddit.getTop({ time: "day", limit: 20 });
-  const topPosts = await subreddit.getNew({ limit: 20 });
+  const topPosts = await subreddit.getTop({ time: "day", limit: 20 });
+  // const topPosts = await subreddit.getNew({ limit: 20 });
   console.log("fetching...");
 
   const memes = topPosts.map((post) => ({
@@ -148,11 +148,11 @@ async function fetchTopMemes(req, subReddit) {
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    `chrome-extension://jjoicfpbcklniccpchgngaibfnjbjkfb`
-  );
-
+  // res.setHeader(
+  //   "Access-Control-Allow-Origin",
+  //   `chrome-extension://jjoicfpbcklniccpchgngaibfnjbjkfb`
+  // );
+  res.setHeader("Access-Control-Allow-Origin", `*`);
   next(); // call next() to move on to the next middleware or route handler
 });
 
