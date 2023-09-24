@@ -86,23 +86,6 @@ const config = {
   },
 };
 
-const data = {
-  model: "text-davinci-003",
-  prompt:
-    "generate funny cring college campus confession that has a weird kink",
-  max_tokens: 124,
-  temperature: 0,
-};
-
-axios
-  .post("https://api.openai.com/v1/completions", data, config)
-  .then((response) => {
-    //console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
 const { exec } = require("child_process");
 
 const Snoowrap = require("snoowrap");
@@ -548,6 +531,34 @@ app.get("/courses", async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
+});
+
+app.post("/generatePromp", async (req, res) => {
+  const prompt = req.body.data.prompt;
+  console.log(prompt);
+
+  const data = {
+    model: "text-davinci-003",
+
+    // model: "text-curie-001",
+    //make up something a reply to the following message in a dumb, funny, cringy, controverisal, unethical way
+    prompt: `message: ${prompt} , respond in a  dumb, funny, horny, cringy, controverisal, way as an another user reading this message`,
+    //prompt: `message: ${prompt} , respond in a sad, suicidal, depressed, emo, pesemistic, controverisal, unethical way way as an another user reading this message`,
+    //  prompt: `message: ${prompt} , respond in a  dumb, pissed, angray, mad, controverisal, way as an another user reading this message`,
+
+    max_tokens: 324,
+    temperature: 0.5,
+  };
+
+  axios
+    .post("https://api.openai.com/v1/completions", data, config)
+    .then((response) => {
+      console.log(response.data);
+      res.send(response.data.choices[0].text);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 app.listen(port, () => {
