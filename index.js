@@ -538,6 +538,7 @@ app.post("/generatePromp", async (req, res) => {
   console.log(prompt);
 
   const data = {
+    //current working model
     model: "text-davinci-003",
 
     // model: "text-curie-001",
